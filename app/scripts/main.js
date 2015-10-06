@@ -8,7 +8,6 @@ $(function() {
       url: API_ROOT,
       data: $(this).serialize()
     }).done(function(data) {
-      console.log(data)
       $('.sidebar h3').text(data.name);
       $('.sidebar h4').text(data.login);
       //$('.sidebar p').text(data.created_at);
@@ -27,22 +26,18 @@ var Router = Backbone.Router.extend({
   },
 
   showProfile: function() {
-    console.log('showProfile');
     $.get('profile.html').then(function(page) {
       $('.content').html(page);
     })
   },
 
   showRepos: function() {
-    console.log('showRepo');
     $.get('repositories.html').then(function(page) {
       $('.content').html(page);
       var data = $.get(
         API_ROOT + '/repos',
         function(data) {
           $(this).serialize();
-
-          $('.content').append('<li>' + data.name + '</li>');
         });
     })
   },
@@ -50,7 +45,6 @@ var Router = Backbone.Router.extend({
 
 
 $(function() {
-  console.log('router starting');
   const router = new Router();
   Backbone.history.start();
 });

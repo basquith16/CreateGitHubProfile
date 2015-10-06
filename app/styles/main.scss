@@ -17,6 +17,33 @@ header {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.pageHead {
+  margin-left: -100px;
+}
+.PopTitle {
+  text-align: center;
+  font-size: 30;
+  background-color: rgba(214, 153, 214, .3);
+  margin: 0 0 0 0;
+  padding: 10px;
+  height: 60px;
+}
+.poppop {
+margin-top: -1px;
+}
+.PopRepos {
+  border: 1px solid black;
+  margin: 25px 0 0 0;
+  background-color: rgba(178, 178, 204, .3);
+}
+
+.popRepo {
+  border: 1px solid black;
+  font-size: 16px;
+  text-align: left;
+  padding-left: 20px;
+}
+
 a {
   text-decoration: none;
   color: #3B3B3B;
@@ -82,4 +109,43 @@ h1 {
 h2 {
   padding: 0;
   margin: 0 0 20px 0;
+}
+
+.repoList {
+  margin-top: 25px;
+  border: 1px solid #B2B2CC;
+  font-size: 24px;
+  line-height: 3em;
+}
+
+.repositoryTitle {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 50px;
+}
+
+.myName {
+  line-height: 1em;
+  margin: 10px 0 0 0 ;
+  padding: 0;
+}
+
+.myUserName {
+margin: 5px 0 0 0;
+}
+
+.followers, .following {
+  font-weight: 600;
+  text-align: center;
+  line-height: .1em;
+  margin: 0;
+  padding: 0;
+}
+
+.repoList li {
+  border-bottom: 1px solid #B2B2CC;
+  width: 400px;
+  margin-left: -35px;
+  text-align: center;
+
 }
