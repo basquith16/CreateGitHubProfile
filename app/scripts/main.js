@@ -1,73 +1,56 @@
-var Router = Backbone.Router.extend({
-
-  routes: {
-    "profile": 'showProfile',
-    'repositories': 'showRepo'
-  },
-
-  showProfile: function() {
-    $('nav.li.repositories').removeClass('active');
-    $('nav.li.profile').addClass('active');
-
-    $.ajax('profile.html').then(function(page) {
-      $('.content').html(page);
-    });
-  },
-
-  showRepo: function() {
-    $('nav.li.profile').removeClass('active');
-    $('nav.li.repositories').addClass('active');
-
-    $.ajax('repositories.html').then(function(page) {
-      $('.content').html(page)
-    });
-  },
-
-  initialize: function() {
-    Backbone.history.start();
-  }
-});
+const API_ROOT = "https://api.github.com/users/basquith16"
 
 
 $(function() {
-  var router = new Router();
-  console.log('new router')
+  $('.sidebar').ready(function(event) {
+    $.ajax({
+      type: 'GET',
+      url: API_ROOT,
+      data: $(this).serialize()
+    }).done(function(data) {
+      console.log(data)
+      $('.sidebar h3').text(data.name);
+      $('.sidebar h4').text(data.login);
+      //$('.sidebar p').text(data.created_at);
+      $('.followers').text(data.followers);
+      $('.following').text(data.following);
+
+    });
+  })
+})
+
+var Router = Backbone.Router.extend({
+
+  routes: {
+    '': 'showProfile',
+    ':name/repos': 'showRepos'
+  },
+
+  showProfile: function() {
+    console.log('showProfile');
+    $.get('profile.html').then(function(page) {
+      $('.content').html(page);
+    })
+  },
+
+  showRepos: function() {
+    console.log('showRepo');
+    $.get('repositories.html').then(function(page) {
+      $('.content').html(page);
+      var data = $.get(
+        API_ROOT + '/repos',
+        function(data) {
+          $(this).serialize();
+
+          $('.content').append('<li>' + data.name + '</li>');
+        });
+    })
+  },
+})
+
+
+$(function() {
+  console.log('router starting');
+  const router = new Router();
+  Backbone.history.start();
 });
-
-
-// var Repositories = Backbone.Collection.extend({
-//   url: 'https://api.github.com/users/basquith/repos'
-//     // model: Repository
-// });
-//
-// var IndivRepoView = Backbone.View.extend({
-//   initialize: function() {},
-//   render: function() {
-//     return $('name');
-//   }
-// });
-//
-// var RepoView = Backbone.View.extend({
-//   initialize: function() {
-//     this.repoViews = [];
-//     this.collection = new Repositories();
-//
-//     this.collection.fetch().then(function(repos) {
-//       _.each(repos, function(repo) {
-//         this.repoViews.push(new IndivRepoView({
-//           model: repo
-//         }));
-//       }.bind(this));
-//     }.bind(this));
-//     this.render();
-//   },
-//
-//   render: function() {
-//     _.each(this.repoViews, function(view) {
-//       var poop = $(this.el).append(view.render());
-//       console.log(poop);
-//     });
-//
-//     $('.content').html(this.el);
-//   }
-// });
